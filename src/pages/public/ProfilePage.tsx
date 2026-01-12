@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { usePublicProfile } from '@/hooks/usePublicProfile'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
@@ -15,7 +15,8 @@ import {
   Award,
   GraduationCap,
   Medal,
-  QrCode
+  QrCode,
+  MessageSquarePlus,
 } from 'lucide-react'
 import { QRCodeSVG } from 'qrcode.react'
 import {
@@ -229,9 +230,17 @@ export function ProfilePage() {
         )}
 
         {/* Testimonials */}
-        {testimonials.length > 0 && (
-          <div>
-            <h2 className="font-semibold mb-4">What Clients Say</h2>
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-semibold">What Clients Say</h2>
+            <Link to={`/p/${slug}/testimonial`}>
+              <Button variant="outline" size="sm">
+                <MessageSquarePlus className="mr-2 h-4 w-4" />
+                Leave a Review
+              </Button>
+            </Link>
+          </div>
+          {testimonials.length > 0 ? (
             <div className="space-y-4">
               {testimonials.map((testimonial) => (
                 <Card key={testimonial.id} className={testimonial.is_featured ? 'border-primary' : ''}>
@@ -272,8 +281,14 @@ export function ProfilePage() {
                 </Card>
               ))}
             </div>
-          </div>
-        )}
+          ) : (
+            <Card>
+              <CardContent className="py-8 text-center text-muted-foreground">
+                <p>No testimonials yet. Be the first to leave a review!</p>
+              </CardContent>
+            </Card>
+          )}
+        </div>
 
         {/* Footer */}
         <div className="mt-12 text-center text-sm text-muted-foreground">
