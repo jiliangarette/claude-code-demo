@@ -1,7 +1,4 @@
 import { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -12,14 +9,13 @@ import { EditPanel } from './EditPanel'
 import { ProfilePhotoEditor } from './ProfilePhotoEditor'
 import { toast } from '@/hooks/useToast'
 import { LoadingSpinner } from '@/components/shared/LoadingSpinner'
-import type { Profile, Credential } from '@/types/database.types'
+import type { Profile, Credential, ProfileUpdate, CredentialInsert } from '@/types/database.types'
 import {
   MessageCircle,
   Mail,
   Linkedin,
   Twitter,
   Globe,
-  MapPin,
   Award,
   GraduationCap,
   Medal,
@@ -27,7 +23,6 @@ import {
   Eye,
   EyeOff,
   Share2,
-  QrCode,
   Copy,
   Check,
   Plus,
@@ -46,9 +41,9 @@ import {
 interface VisualProfileEditorProps {
   profile: Profile
   credentials: Credential[]
-  onUpdateProfile: (updates: Partial<Profile>) => Promise<void>
-  onUploadPhoto: (file: File) => Promise<void>
-  onAddCredential: (credential: Omit<Credential, 'id' | 'profile_id' | 'created_at'>) => Promise<void>
+  onUpdateProfile: (updates: ProfileUpdate) => Promise<Profile>
+  onUploadPhoto: (file: File) => Promise<string>
+  onAddCredential: (credential: Omit<CredentialInsert, 'profile_id'>) => Promise<Credential>
   onDeleteCredential: (id: string) => Promise<void>
 }
 
@@ -98,7 +93,7 @@ export function VisualProfileEditor({
 
   const profileUrl = `${window.location.origin}/p/${profile.slug}`
 
-  const handleSave = async (field: EditingField, updates: Partial<Profile>) => {
+  const handleSave = async (_field: EditingField, updates: ProfileUpdate) => {
     setIsSaving(true)
     try {
       await onUpdateProfile(updates)

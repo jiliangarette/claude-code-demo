@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import { Pencil } from 'lucide-react'
 
@@ -19,8 +18,6 @@ export function EditableField({
   isEmpty = false,
   emptyText = 'Click to add',
 }: EditableFieldProps) {
-  const [isHovered, setIsHovered] = useState(false)
-
   return (
     <div
       className={cn(
@@ -30,8 +27,6 @@ export function EditableField({
         className
       )}
       onClick={onClick}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
       {isEmpty ? (
         <div className="flex items-center justify-center py-4 text-muted-foreground">

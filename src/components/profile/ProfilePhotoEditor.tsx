@@ -1,15 +1,13 @@
 import { useState, useRef } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
 import { LoadingSpinner } from '@/components/shared/LoadingSpinner'
-import { Camera, Upload, Trash2 } from 'lucide-react'
+import { Camera } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 interface ProfilePhotoEditorProps {
   photoUrl: string | null
   name: string | null
-  onUpload: (file: File) => Promise<void>
-  onRemove?: () => Promise<void>
+  onUpload: (file: File) => Promise<unknown>
   size?: 'sm' | 'md' | 'lg' | 'xl'
   editable?: boolean
 }
@@ -25,7 +23,6 @@ export function ProfilePhotoEditor({
   photoUrl,
   name,
   onUpload,
-  onRemove,
   size = 'lg',
   editable = true,
 }: ProfilePhotoEditorProps) {

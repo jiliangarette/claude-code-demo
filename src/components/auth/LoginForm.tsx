@@ -40,7 +40,6 @@ export function LoginForm() {
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -86,12 +85,6 @@ export function LoginForm() {
     } finally {
       setLoadingDemo(null)
     }
-  }
-
-  const fillDemoCredentials = (accountType: 'admin' | 'consultant') => {
-    const account = DEMO_ACCOUNTS[accountType]
-    setValue('email', account.email)
-    setValue('password', account.password)
   }
 
   return (
